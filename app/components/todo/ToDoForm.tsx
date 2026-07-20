@@ -39,7 +39,7 @@ const ToDoForm = ({onAddToDo}: Props) => {
       <Container maxWidth="xl" sx={{ mt: "50px" }}>
         <form onSubmit={handleSubmit(onSubmit)}>
         <Grid container spacing={3}>
-          <Grid size={{ xs: 10 }}>
+          <Grid size={{ xs: 7, sm : 10 }}>
             <Controller
               control={control}
               name="text"
@@ -55,7 +55,7 @@ const ToDoForm = ({onAddToDo}: Props) => {
               )}
             />
           </Grid>
-          <Grid size={{ xs: 2 }}>
+          <Grid size={{ xs: 5, sm: 2 }}>
             <Button
               type="submit"
               variant="contained"

@@ -43,11 +43,28 @@ export default function Home() {
     setToDos(todos.map((todo) => (todo.id == id ? { ...todo, text } : todo)));
   };
 
+  const deleteToDo = (id: number) => {
+    setToDos(todos.filter((todo) => todo.id != id));
+  };
+
+  const todoComplete = (id: number) => {
+    setToDos(
+      todos.map((todo) =>
+        todo.id == id ? { ...todo, completed: !todo.completed } : todo,
+      ),
+    );
+  };
+
   return (
     <>
       <Box>
         <ToDoForm onAddToDo={addToDo} />
-        <ToDoList todos={todos} onEdit={EditToDo} />
+        <ToDoList
+          todos={todos}
+          onEdit={EditToDo}
+          onDelete={deleteToDo}
+          onComplete={todoComplete}
+        />
       </Box>
 
       {selectedToDo && (

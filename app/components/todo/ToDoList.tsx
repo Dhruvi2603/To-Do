@@ -12,21 +12,22 @@ import { ToDo } from "../types/todo";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import RadioButtonUncheckedIcon from "@mui/icons-material/RadioButtonUnchecked";
 import { useState } from "react";
 
 interface Props {
   todos: ToDo[];
-  onEdit: (todo: ToDo) => void
+  onEdit: (todo: ToDo) => void;
+  onDelete: (id: number) => void;
+  onComplete: (id: number) => void;
 }
 
-const ToDoList = ({ todos, onEdit }: Props) => {
-
+const ToDoList = ({ todos, onEdit, onDelete, onComplete }: Props) => {
   return (
     <>
       <Container maxWidth="xl">
         <Grid container spacing={3} sx={{ mt: "50px" }}>
           {todos.map((todo) => {
-            if (todo.completed) return null;
             return (
               <Grid size={{ xs: 12 }} key={todo.id}>
                 <Card
@@ -43,18 +44,32 @@ const ToDoList = ({ todos, onEdit }: Props) => {
                       alignItems: "center",
                     }}
                   >
-                    <Typography sx={{ fontSize: "16px", fontWeight: 500 }}>
+                    <Typography
+                      sx={{
+                        fontSize: "16px",
+                        fontWeight: 500,
+                        textDecoration: todo.completed
+                          ? "line-through"
+                          : "none",
+                      }}
+                    >
                       {todo.text}
                     </Typography>
                     <Box sx={{ display: "flex", gap: "10px" }}>
-                      <IconButton onClick={() => onEdit(todo)}>
-                        <EditIcon sx={{ color: "#3a9fc9" }} />
-                      </IconButton>
-                      <IconButton>
+                      {!todo.completed && (
+                        <IconButton onClick={() => onEdit(todo)}>
+                          <EditIcon sx={{ color: "#3a9fc9" }} />
+                        </IconButton>
+                      )}
+                      <IconButton onClick={() => onDelete(todo.id)}>
                         <DeleteIcon sx={{ color: "#c93a41" }} />
                       </IconButton>
-                      <IconButton>
-                        <CheckCircleIcon sx={{ color: "#369636" }} />
+                      <IconButton onClick={() => onComplete(todo.id)}>
+                        {todo.completed ? (
+                          <CheckCircleIcon color="success" />
+                        ) : (
+                          <RadioButtonUncheckedIcon color="disabled" />
+                        )}
                       </IconButton>
                     </Box>
                   </CardContent>

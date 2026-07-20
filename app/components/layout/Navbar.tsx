@@ -8,10 +8,6 @@ const links = [
     text: "Home",
     navigate: "/",
   },
-  {
-    text: "Completed",
-    navigate: "/completed",
-  },
 ];
 
 const Navbar = () => {
